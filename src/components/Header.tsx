@@ -40,7 +40,9 @@ export default function Header() {
       </Link>
       <Link to={routes.cart}>
         <CartContainer>
-          <CartCount>{cartProducts.length} items</CartCount>
+          <CartCount>
+            {cartProducts.length} {cartProducts.length === 1 ? "item" : "itens"}
+          </CartCount>
           <img src={"/cart.svg"} alt="My SVG" />
         </CartContainer>
       </Link>

@@ -27,7 +27,9 @@ export default function Layout({
 
 const ContentWrapper = styled.div`
   flex: 1;
-  padding: 0 16px;
+  padding: 0 16px 16px 16px;
+  display: flex;
+  flex-direction: column;
 `;
 
 Layout.ContentWrapper = ContentWrapper;

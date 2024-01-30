@@ -1,6 +1,7 @@
 import { Product } from "../@types";
 import Button from "../components/Button";
 import useCart from "../contexts/CartContextProvider/useCart";
+import { displayMoneyValueFormatted } from "../helpers/displayMoneyValueFormatted";
 import {
   CardBodyWrapper,
   CardContainerWrapper,
@@ -28,7 +29,7 @@ export default function ProductList({ products }: { products: Product[] }) {
               <CardBodyWrapper>
                 <CardInfoWrapper>
                   <CardTitle>{product.title}</CardTitle>
-                  <CardPrice>R$ {product.price.toFixed(2)}</CardPrice>
+                  <CardPrice>R$ {displayMoneyValueFormatted(product.price)}</CardPrice>
                 </CardInfoWrapper>
                 <Button
                   onClick={() => {

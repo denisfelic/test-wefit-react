@@ -1,13 +1,13 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { Product } from "../../@types";
 
-interface CartItem {
+export interface ICartItemProps {
   product: Product;
   quantity: number;
 }
 
 interface ICartContextProps {
-  cartProducts: CartItem[];
+  cartProducts: ICartItemProps[];
   addProductToCart: (product: Product) => void;
   removeProductFromCart: (product: Product) => void;
   clearCart: () => void;
@@ -19,12 +19,12 @@ export default function CartContextProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const [cartProducts, setCartProducts] = useState<CartItem[]>([]);
+  const [cartProducts, setCartProducts] = useState<ICartItemProps[]>([]);
 
   const addProductToCart = (product: Product) => {
     const productInCart = cartProducts.find((p) => p.product.id === product.id);
 
-    let updatedCart: CartItem[] = [];
+    let updatedCart: ICartItemProps[] = [];
 
     if (!productInCart) {
       updatedCart = [...cartProducts, { product, quantity: 1 }];
@@ -57,7 +57,7 @@ export default function CartContextProvider({
     saveCardInStorage([]);
   };
 
-  const saveCardInStorage = (updatedCartProducts: CartItem[]) => {
+  const saveCardInStorage = (updatedCartProducts: ICartItemProps[]) => {
     localStorage.setItem("cart", JSON.stringify(updatedCartProducts));
   };
 
@@ -85,4 +85,3 @@ export default function CartContextProvider({
     </CartContext.Provider>
   );
 }
-

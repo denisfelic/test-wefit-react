@@ -41,8 +41,8 @@ const GlobalStyle = createGlobalStyle`
 
   * {
     box-sizing: border-box;
+    background-color: transparent;
   }
-  
   body {
     margin: 0;
     padding: 0;
