@@ -11,9 +11,10 @@ interface ICartContextProps {
   addProductToCart: (product: Product) => void;
   removeProductFromCart: (product: Product) => void;
   decrementProductQuantity: (product: Product) => void;
-  updateProductQuantity: (product: Product, quantity: number) => void
+  updateProductQuantity: (product: Product, quantity: number) => void;
   clearCart: () => void;
   totalOfItemsInCart: number;
+  isLoading: boolean;
 }
 export const CartContext = createContext({} as ICartContextProps);
 
@@ -23,7 +24,7 @@ export default function CartContextProvider({
   children: React.ReactNode;
 }) {
   const [cartProducts, setCartProducts] = useState<ICartItemProps[]>([]);
-
+  const [isLoading, setIsLoading] = useState(true);
   const totalOfItemsInCart = useMemo(
     () => cartProducts.reduce((acc, curr) => (acc += curr.quantity), 0),
     [cartProducts]
@@ -66,13 +67,24 @@ export default function CartContextProvider({
   };
 
   const saveCardInStorage = (updatedCartProducts: ICartItemProps[]) => {
-    localStorage.setItem("cart", JSON.stringify(updatedCartProducts));
+    try {
+      localStorage.setItem("cart", JSON.stringify(updatedCartProducts));
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const getCartFromStorage = () => {
-    const cart = localStorage.getItem("cart");
-    if (cart) {
-      setCartProducts(JSON.parse(cart));
+    try {
+      setIsLoading(true);
+      const cart = localStorage.getItem("cart");
+      if (cart) {
+        setCartProducts(JSON.parse(cart));
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -117,7 +129,8 @@ export default function CartContextProvider({
         clearCart,
         totalOfItemsInCart,
         decrementProductQuantity,
-        updateProductQuantity
+        updateProductQuantity,
+        isLoading,
       }}
     >
       {children}
