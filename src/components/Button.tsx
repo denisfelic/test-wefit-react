@@ -19,6 +19,10 @@ export const CardButtonWrapper = styled.button<CardButtonProps>`
   background-color: ${(props) => {
     return props.color === "green" ? theme.colors.green : theme.colors.blue;
   }};
+  position: relative;
+  padding: 13px 10.53px;
+  justify-content: center;
+  text-align: center;
 `;
 
 interface CartButtonTextProps {
@@ -32,6 +36,10 @@ export const CartButtonText = styled.span<CartButtonTextProps>`
   font-weight: bold;
   padding-top: ${(props) => (props.size === "medium" ? "2px" : "0px")};
   padding-bottom: ${(props) => (props.size === "medium" ? "2px" : "0px")};
+  padding-left: 38px;
+
+  @media screen and (${theme.breakpoints.lg}) {
+  }
 `;
 
 export default function Button({ children, ...props }: IButtonProps) {

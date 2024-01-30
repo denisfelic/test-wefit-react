@@ -9,12 +9,18 @@ export const CardWrapper = styled.li`
   justify-content: center;
   align-items: center;
   padding: 10px 10px;
+
 `;
 
-export const CardContainerWrapper = styled.div`
+export const CardContainerWrapper = styled.ul`
   display: flex;
   flex-direction: column;
   gap: 16px;
+
+  @media screen and (${theme.breakpoints.lg}){ 
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+  }
 `;
 
 export const CardImage = styled.img`
@@ -33,7 +39,12 @@ export const CardInfoWrapper = styled.div`
   gap: 9px;
   text-align: center;
   margin-top: 10px;
-  margin-bottom: 12px;
+  margin-bottom: 11.2px;
+
+  @media screen and (${theme.breakpoints.lg}) {
+     gap: 7.6px;
+     margin-bottom: 11.8px;
+  }
 `;
 
 export const CardTitle = styled.span`
@@ -51,4 +62,10 @@ export const CartButtonIconWrapper = styled.div`
   display: flex;
   align-items: center;
   gap: 5px;
+  position: absolute;
+  left: 64px;
+
+  @media screen and (${theme.breakpoints.lg}) {
+    left: 48px;
+  }
 `;

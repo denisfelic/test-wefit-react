@@ -11,8 +11,8 @@ export default {
   borderRadius: "4px",
   container: "960px",
   breakpoints: {
-    md: 768,
-    lg: 1280,
+    md: "min-width: 768px",
+    lg: "min-width: 1024px",
   },
   fonts: {
     default: "'Open Sans', sans-serif;",

@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import Header from "./Header";
 import LoadingSpinner from "./LoadingSpinner";
+import theme from "../styles/theme";
 
 const LayoutWrapper = styled.div`
   width: 100vw;
@@ -8,6 +9,8 @@ const LayoutWrapper = styled.div`
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  max-width: ${theme.container};
+  margin: 0 auto;
 `;
 
 export default function Layout({
@@ -30,6 +33,11 @@ const ContentWrapper = styled.div`
   padding: 0 16px 16px 16px;
   display: flex;
   flex-direction: column;
+
+
+  @media screen and (${theme.breakpoints.lg}){ 
+    padding: 29px 0px;
+  }
 `;
 
 Layout.ContentWrapper = ContentWrapper;
