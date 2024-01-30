@@ -8,15 +8,15 @@
     },
     {
       "id": 2,
-      "title": "Shang-chi",
-      "price": 30.99,
-      "image": "https://wefit-react-web-test.s3.amazonaws.com/shang-chi.png"
+      "title": "Homem Aranha",
+      "price": 29.99,
+      "image": "https://wefit-react-web-test.s3.amazonaws.com/spider-man.png"
     },
     {
       "id": 3,
-      "title": "Homem Aranha",
-      "price": 29.9,
-      "image": "https://wefit-react-web-test.s3.amazonaws.com/spider-man.png"
+      "title": "Shang-chi",
+      "price": 30.99,
+      "image": "https://wefit-react-web-test.s3.amazonaws.com/shang-chi.png"
     },
     {
       "id": 5,
