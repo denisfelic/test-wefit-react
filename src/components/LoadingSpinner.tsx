@@ -10,7 +10,7 @@ const LoadingSpinnerContainer = styled.div`
 export default function LoadingSpinner() {
   return (
     <LoadingSpinnerContainer>
-      <img src="/public/Loader.png" className="loading-animation-icon" />
+      <img src="/Loader.png" className="loading-animation-icon" />
     </LoadingSpinnerContainer>
   );
 }

@@ -1,5 +1,8 @@
 import styled from "styled-components";
-import theme from "../../styles/theme";
+import theme from "../styles/theme";
+import useCart from "../contexts/CartContextProvider/useCart";
+import { Link } from "react-router-dom";
+import { routes } from "../App";
 
 const HeaderContainer = styled.div`
   display: flex;
@@ -29,13 +32,18 @@ const CartCount = styled.span`
 `;
 
 export default function Header() {
+  const { cartProducts } = useCart();
   return (
     <HeaderContainer>
-      <HeaderTitle>WeMovies</HeaderTitle>
-      <CartContainer>
-        <CartCount>0 items</CartCount>
-        <img src={"/public/cart.svg"} alt="My SVG" />
-      </CartContainer>
+      <Link to={routes.home}>
+        <HeaderTitle>WeMovies</HeaderTitle>
+      </Link>
+      <Link to={routes.cart}>
+        <CartContainer>
+          <CartCount>{cartProducts.length} items</CartCount>
+          <img src={"/cart.svg"} alt="My SVG" />
+        </CartContainer>
+      </Link>
     </HeaderContainer>
   );
 }
