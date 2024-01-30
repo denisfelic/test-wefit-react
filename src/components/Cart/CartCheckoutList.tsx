@@ -60,13 +60,14 @@ const CartCheckoutTotalTextValue = styled.p`
   text-transform: uppercase;
 `;
 
-export default function CartCheckout({
+export default function CartCheckoutList({
   cartItems,
   totalCartValue,
   onRemoveCartItem,
   onIncrementCartItem,
   onDecrementCartItem,
   onUpdateProductQuantity,
+  onProceedCheckout
 }: {
   cartItems: ICartItemProps[];
   totalCartValue: number;
@@ -74,6 +75,7 @@ export default function CartCheckout({
   onIncrementCartItem: (product: ICartItemProps) => void;
   onDecrementCartItem: (product: ICartItemProps) => void;
   onUpdateProductQuantity: (product: ICartItemProps, quantity: number) => void;
+  onProceedCheckout: () => void
 }) {
   return (
     <CartCheckoutWrapper>
@@ -104,7 +106,7 @@ export default function CartCheckout({
           </CartCheckoutTotalTextValue>
         </CartCheckoutTotalTextWrapper>
         <Button>
-          <Button.Text size="medium">Finalizar pedido</Button.Text>
+          <Button.Text size="medium" onClick={onProceedCheckout}>Finalizar pedido</Button.Text>
         </Button>
       </CartCheckoutBottomWrapper>
     </CartCheckoutWrapper>

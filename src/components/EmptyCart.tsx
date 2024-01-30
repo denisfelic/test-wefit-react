@@ -1,6 +1,7 @@
-import styled from "styled-components";
+import styled, { CSSProperties } from "styled-components";
 import theme from "../styles/theme";
 import Button from "./Button";
+import { HtmlHTMLAttributes } from "react";
 
 const EmptyCardContainer = styled.div`
   background-color: ${theme.colors.white};
@@ -23,17 +24,26 @@ const EmptyCardButtonWrapper = styled.div`
   padding: 6px 81.5px 64px 81.5px;
 `;
 
-export default function EmptyCart({ onGoBack }: { onGoBack?: () => void }) {
+export default function EmptyCart({
+  title,
+  image,
+  buttonProps,
+}: {
+  title: string | React.ReactNode;
+  image: {
+    src: string;
+    alt?: string;
+    style?: CSSProperties;
+  };
+  buttonProps: HtmlHTMLAttributes<HTMLButtonElement>;
+}) {
   return (
     <EmptyCardContainer>
-      <EmptyCardText>
-        Parece que não <br />
-        há nada por aqui :(
-      </EmptyCardText>
-      <img src="/svg/empty-cart.svg" alt="Empty Cart" />
+      <EmptyCardText>{title}</EmptyCardText>
+      <img src={image.src} alt={image?.alt} style={image?.style} />
       <EmptyCardButtonWrapper>
-        <Button onClick={onGoBack}>
-          <Button.Text size="medium">Voltar</Button.Text>
+        <Button onClick={buttonProps?.onClick}>
+          <Button.Text size="medium">{buttonProps.children}</Button.Text>
         </Button>
       </EmptyCardButtonWrapper>
     </EmptyCardContainer>

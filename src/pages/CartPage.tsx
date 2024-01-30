@@ -1,55 +1,64 @@
-import { useMemo } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { routes } from "../App";
-import CartCheckout from "../components/Cart/CartCheckout";
 import EmptyCart from "../components/EmptyCart";
 import Layout from "../components/Layout";
 import useCart from "../contexts/CartContextProvider/useCart";
+import CartCheckout from "../features/CartCheckout";
 
 export default function CartPage() {
-  const { isLoading } = useCart();
-  const {
-    cartProducts,
-    removeProductFromCart,
-    addProductToCart,
-    decrementProductQuantity,
-    updateProductQuantity,
-  } = useCart();
+  const { isLoading: cartIsLoading } = useCart();
+  const [processingCheckout, setProcessingCheckout] = useState(false);
   const navigate = useNavigate();
 
-  const totalCartValue = useMemo(
-    () =>
-      cartProducts.reduce(
-        (acc, curr) => acc + curr.product.price * curr.quantity,
-        0
-      ),
-    [cartProducts]
-  );
+  const [showSuccessCheckout, setShowSuccessCheckout] = useState(false);
 
+  const { clearCart } = useCart();
+
+  const fakeApiCall = async () => {
+    try {
+      setProcessingCheckout(true);
+      clearCart();
+      setShowSuccessCheckout(true);
+
+      const response = await new Promise((resolve) => {
+        setTimeout(() => {
+          resolve("success");
+        }, 1200);
+      });
+      return response;
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setProcessingCheckout(false);
+    }
+  };
   return (
-    <Layout isLoading={isLoading}>
+    <Layout isLoading={cartIsLoading || processingCheckout}>
       <Layout.ContentWrapper>
-        {cartProducts.length === 0 ? (
-          <EmptyCart onGoBack={() => navigate(routes.home)} />
+        {showSuccessCheckout ? (
+          <EmptyCart
+            title="Compra realizada com sucesso!"
+            image={{
+              src: "/svg/success-checkout.svg",
+              alt: "Success Checkout",
+              style: {
+                padding: "0 24px",
+              },
+            }}
+            buttonProps={{
+              onClick: () => {
+                navigate(routes.home);
+              },
+              children: "Voltar",
+            }}
+          />
         ) : (
-          <>
-            <CartCheckout
-              cartItems={cartProducts}
-              totalCartValue={totalCartValue}
-              onRemoveCartItem={(cartItem) =>
-                removeProductFromCart(cartItem.product)
-              }
-              onIncrementCartItem={(cartItem) =>
-                addProductToCart(cartItem.product)
-              }
-              onDecrementCartItem={(cartItem) =>
-                decrementProductQuantity(cartItem.product)
-              }
-              onUpdateProductQuantity={(cartItem, quantity) =>
-                updateProductQuantity(cartItem.product, quantity)
-              }
-            />
-          </>
+          <CartCheckout
+            onProceedCheckout={() => {
+              fakeApiCall();
+            }}
+          />
         )}
       </Layout.ContentWrapper>
     </Layout>
