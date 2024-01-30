@@ -1,29 +1,60 @@
 import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
 import { routes } from "../App";
+import Button from "../components/Button";
+import CartItem from "../components/Cart/CartItem";
 import EmptyCart from "../components/EmptyCart";
 import Layout from "../components/Layout";
 import { ICartItemProps } from "../contexts/CartContextProvider";
 import useCart from "../contexts/CartContextProvider/useCart";
-import styled from "styled-components";
-import theme from "../styles/theme";
-import CartItem from "../components/Cart/CartItem";
-import Button from "../components/Button";
 import { displayMoneyValueFormatted } from "../helpers/displayMoneyValueFormatted";
+import theme from "../styles/theme";
+import { useMemo } from "react";
+import useProducts from "../hooks/api/useProducts";
 
 export default function CartPage() {
-  const { cartProducts } = useCart();
+  const { isLoading } = useProducts();
+  const {
+    cartProducts,
+    removeProductFromCart,
+    addProductToCart,
+    decrementProductQuantity,
+    updateProductQuantity,
+  } = useCart();
   const navigate = useNavigate();
 
-  console.log(cartProducts);
+  const totalCartValue = useMemo(
+    () =>
+      cartProducts.reduce(
+        (acc, curr) => acc + curr.product.price * curr.quantity,
+        0
+      ),
+    [cartProducts]
+  );
 
   return (
-    <Layout>
+    <Layout isLoading={isLoading}>
       <Layout.ContentWrapper>
         {cartProducts.length === 0 ? (
           <EmptyCart onGoBack={() => navigate(routes.home)} />
         ) : (
           <>
-            <CartCheckout cartItems={cartProducts} />
+            <CartCheckout
+              cartItems={cartProducts}
+              totalCartValue={totalCartValue}
+              onRemoveCartItem={(cartItem) =>
+                removeProductFromCart(cartItem.product)
+              }
+              onIncrementCartItem={(cartItem) =>
+                addProductToCart(cartItem.product)
+              }
+              onDecrementCartItem={(cartItem) =>
+                decrementProductQuantity(cartItem.product)
+              }
+              onUpdateProductQuantity={(cartItem, quantity) =>
+                updateProductQuantity(cartItem.product, quantity)
+              }
+            />
           </>
         )}
       </Layout.ContentWrapper>
@@ -86,18 +117,37 @@ const CartCheckoutTotalTextValue = styled.p`
   text-transform: uppercase;
 `;
 
-const CartCheckout = ({ cartItems }: { cartItems: ICartItemProps[] }) => {
-  const totalCartValue = cartItems.reduce(
-    (acc, curr) => acc + curr.product.price * curr.quantity,
-    0
-  );
+const CartCheckout = ({
+  cartItems,
+  totalCartValue,
+  onRemoveCartItem,
+  onIncrementCartItem,
+  onDecrementCartItem,
+  onUpdateProductQuantity,
+}: {
+  cartItems: ICartItemProps[];
+  totalCartValue: number;
+  onRemoveCartItem: (cartItem: ICartItemProps) => void;
+  onIncrementCartItem: (product: ICartItemProps) => void;
+  onDecrementCartItem: (product: ICartItemProps) => void;
+  onUpdateProductQuantity: (product: ICartItemProps, quantity: number) => void;
+}) => {
   return (
     <CartCheckoutWrapper>
       <CartCheckoutItemsWrapper>
         <CartCheckoutItemsScroll>
           {cartItems.map((cartItem) => (
             <li>
-              <CartItem cartItem={cartItem} key={cartItem.product.id} />
+              <CartItem
+                cartItem={cartItem}
+                key={cartItem.product.id}
+                onRemoveCartItem={() => onRemoveCartItem(cartItem)}
+                onIncrementCartItem={() => onIncrementCartItem(cartItem)}
+                onDecrementCartItem={() => onDecrementCartItem(cartItem)}
+                onUpdateProductQuantity={(quantity) =>
+                  onUpdateProductQuantity(cartItem, quantity)
+                }
+              />
             </li>
           ))}
         </CartCheckoutItemsScroll>

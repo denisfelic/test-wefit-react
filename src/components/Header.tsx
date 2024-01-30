@@ -1,8 +1,8 @@
-import styled from "styled-components";
-import theme from "../styles/theme";
-import useCart from "../contexts/CartContextProvider/useCart";
 import { Link } from "react-router-dom";
+import styled from "styled-components";
 import { routes } from "../App";
+import useCart from "../contexts/CartContextProvider/useCart";
+import theme from "../styles/theme";
 
 const HeaderContainer = styled.div`
   display: flex;
@@ -22,7 +22,7 @@ const HeaderTitle = styled.a`
 const CartContainer = styled.div`
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 13px;
 `;
 
 const CartCount = styled.span`
@@ -32,7 +32,8 @@ const CartCount = styled.span`
 `;
 
 export default function Header() {
-  const { cartProducts } = useCart();
+  const { totalOfItemsInCart } = useCart();
+
   return (
     <HeaderContainer>
       <Link to={routes.home}>
@@ -41,9 +42,9 @@ export default function Header() {
       <Link to={routes.cart}>
         <CartContainer>
           <CartCount>
-            {cartProducts.length} {cartProducts.length === 1 ? "item" : "itens"}
+            {totalOfItemsInCart} {totalOfItemsInCart === 1 ? "item" : "itens"}
           </CartCount>
-          <img src={"/cart.svg"} alt="My SVG" />
+          <img src={"/cart.svg"} alt="Carrinho de compras" />
         </CartContainer>
       </Link>
     </HeaderContainer>

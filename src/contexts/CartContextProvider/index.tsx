@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useEffect, useMemo, useState } from "react";
 import { Product } from "../../@types";
 
 export interface ICartItemProps {
@@ -10,7 +10,10 @@ interface ICartContextProps {
   cartProducts: ICartItemProps[];
   addProductToCart: (product: Product) => void;
   removeProductFromCart: (product: Product) => void;
+  decrementProductQuantity: (product: Product) => void;
+  updateProductQuantity: (product: Product, quantity: number) => void
   clearCart: () => void;
+  totalOfItemsInCart: number;
 }
 export const CartContext = createContext({} as ICartContextProps);
 
@@ -20,6 +23,11 @@ export default function CartContextProvider({
   children: React.ReactNode;
 }) {
   const [cartProducts, setCartProducts] = useState<ICartItemProps[]>([]);
+
+  const totalOfItemsInCart = useMemo(
+    () => cartProducts.reduce((acc, curr) => (acc += curr.quantity), 0),
+    [cartProducts]
+  );
 
   const addProductToCart = (product: Product) => {
     const productInCart = cartProducts.find((p) => p.product.id === product.id);
@@ -68,6 +76,34 @@ export default function CartContextProvider({
     }
   };
 
+  const decrementProductQuantity = (product: Product) => {
+    const updatedCart = cartProducts.map((p) => {
+      if (p.product.id === product.id) {
+        return {
+          ...p,
+          quantity: p.quantity - 1,
+        };
+      }
+      return p;
+    });
+    setCartProducts(updatedCart);
+    saveCardInStorage(updatedCart);
+  };
+
+  const updateProductQuantity = (product: Product, quantity: number) => {
+    const updatedCart = cartProducts.map((p) => {
+      if (p.product.id === product.id) {
+        return {
+          ...p,
+          quantity,
+        };
+      }
+      return p;
+    });
+    setCartProducts(updatedCart);
+    saveCardInStorage(updatedCart);
+  };
+
   useEffect(() => {
     getCartFromStorage();
   }, []);
@@ -79,6 +115,9 @@ export default function CartContextProvider({
         addProductToCart,
         removeProductFromCart,
         clearCart,
+        totalOfItemsInCart,
+        decrementProductQuantity,
+        updateProductQuantity
       }}
     >
       {children}

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import theme from "../styles/theme";
+import theme from "../../styles/theme";
 
 export const CardWrapper = styled.li`
   display: flex;
@@ -47,11 +47,8 @@ export const CardPrice = styled.span`
   color: ${theme.colors.darkGray};
 `;
 
-
-
 export const CartButtonIconWrapper = styled.div`
   display: flex;
   align-items: center;
   gap: 5px;
 `;
-

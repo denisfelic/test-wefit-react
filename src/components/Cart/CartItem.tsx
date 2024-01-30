@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { ICartItemProps } from "../../contexts/CartContextProvider";
 import theme from "../../styles/theme";
 import { displayMoneyValueFormatted } from "../../helpers/displayMoneyValueFormatted";
+import { useState } from "react";
 
 const CartItemWrapper = styled.div`
   display: flex;
@@ -91,7 +92,40 @@ const CartSubTotalText = styled.p`
   text-transform: uppercase;
 `;
 
-export default function CartItem({ cartItem }: { cartItem: ICartItemProps }) {
+export interface ICartItem {
+  cartItem: ICartItemProps;
+  onRemoveCartItem: () => void;
+  onIncrementCartItem: () => void;
+  onDecrementCartItem: () => void;
+  onUpdateProductQuantity: (quantity: number) => void;
+}
+export default function CartItem({
+  cartItem,
+  onRemoveCartItem,
+  onIncrementCartItem,
+  onDecrementCartItem,
+  onUpdateProductQuantity,
+}: ICartItem) {
+  const [quantity, setQuantity] = useState(cartItem.quantity);
+
+  const subTotal = cartItem.product.price * cartItem.quantity;
+
+  const onDecrement = () => {
+    if (cartItem.quantity > 1) {
+      onDecrementCartItem();
+      setQuantity((prev) => prev - 1);
+      return;
+    }
+
+    onRemoveCartItem();
+  };
+
+  const handleUpdateQuantity = () => {
+    if (quantity > 0) {
+      onUpdateProductQuantity(quantity);
+    }
+  };
+
   return (
     <CartItemWrapper>
       <CartItemImage
@@ -106,26 +140,44 @@ export default function CartItem({ cartItem }: { cartItem: ICartItemProps }) {
               R$ {displayMoneyValueFormatted(cartItem.product.price)}
             </CartPrice>
           </CartInfoTopTextsWrapper>
-          <button>
+          <button onClick={onRemoveCartItem}>
             <img src="/svg/bin-trash.svg" alt="imagem de lixeira" />
           </button>
         </CartInfoTopWrapper>
 
         <CartInfoBottomWrapper>
           <CartActionsButtonWrapper>
-            <CartActionButton>
+            <CartActionButton onClick={onDecrement}>
               <img src="/svg/remove-icon.svg" alt="" />
             </CartActionButton>
-            <CartQuantityInput value={1} />
-            <CartActionButton>
+            <CartQuantityInput
+              min={1}
+              value={parseInt(quantity.toString())}
+              type="number"
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  handleUpdateQuantity();
+                }
+              }}
+              onChange={(event) => {
+                const value = Number(event.target.value);
+                if (typeof value === "number" && value > -1) {
+                  setQuantity(value);
+                }
+              }}
+            />
+            <CartActionButton
+              onClick={() => {
+                setQuantity((prev) => prev + 1);
+                onIncrementCartItem();
+              }}
+            >
               <img src="/svg/add-icon.svg" alt="" />
             </CartActionButton>
           </CartActionsButtonWrapper>
           <CartSubTotalWrapper>
             <CartSubTotalText>Subtotal</CartSubTotalText>
-            <CartPrice>
-              R$ {displayMoneyValueFormatted(cartItem.product.price)}
-            </CartPrice>
+            <CartPrice>R$ {displayMoneyValueFormatted(subTotal)}</CartPrice>
           </CartSubTotalWrapper>
         </CartInfoBottomWrapper>
       </CartInfoWrapper>

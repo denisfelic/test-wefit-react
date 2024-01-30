@@ -1,4 +1,4 @@
-import ProductList from "../ProductList/ProductList";
+import ProductList from "../components/ProductList";
 import Layout from "../components/Layout";
 import useProducts from "../hooks/api/useProducts";
 
