@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Product } from "./@types";
 import Header from "./components/Header";
 import LoadingSpinner from "./components/LoadingSpinner";
-import ProductList from "./features/ProductList";
+import ProductList from "./components/ProductList/ProductList";
 
 const Layout = styled.div`
   width: 100vw;

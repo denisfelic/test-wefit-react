@@ -1,12 +1,5 @@
 import styled from "styled-components";
 import theme from "../../styles/theme";
-import { useEffect, useState } from "react";
-import { Product } from "../../@types/index";
-const HeaderTitle = styled.a`
-  color: ${theme.colors.white};
-  font-size: 20px;
-  font-weight: bold;
-`;
 
 const HeaderContainer = styled.div`
   display: flex;
@@ -14,6 +7,13 @@ const HeaderContainer = styled.div`
   height: fit-content;
   padding: 18px 10px;
   justify-content: space-between;
+  align-items: center;
+`;
+
+const HeaderTitle = styled.a`
+  color: ${theme.colors.white};
+  font-size: 20px;
+  font-weight: bold;
 `;
 
 const CartContainer = styled.div`
@@ -28,9 +28,7 @@ const CartCount = styled.span`
   font-weight: 600;
 `;
 
-
 export default function Header() {
-  
   return (
     <HeaderContainer>
       <HeaderTitle>WeMovies</HeaderTitle>

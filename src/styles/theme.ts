@@ -4,6 +4,8 @@ export default {
     gray: "#999999",
     white: "#FFFFFF",
     black: "#333333",
+    blue: "#009EDD",
+    green: "#039B00",
   },
   container: "960px",
   breakpoints: {
