@@ -47,22 +47,7 @@ export const CardPrice = styled.span`
   color: ${theme.colors.darkGray};
 `;
 
-interface CardButtonProps {
-  color?: "green" | "blue";
-}
-export const CardButtonWrapper = styled.button<CardButtonProps>`
-  display: flex;
-  color: ${theme.colors.white};
-  align-items: center;
-  gap: 12px;
-  width: 100%;
-  padding: 11px 10.53px;
-  justify-content: center;
-  border-radius: 4px;
-  background-color: ${(props) => {
-    return props.color === "green" ? theme.colors.green : theme.colors.blue;
-  }};
-`;
+
 
 export const CartButtonIconWrapper = styled.div`
   display: flex;
@@ -70,10 +55,3 @@ export const CartButtonIconWrapper = styled.div`
   gap: 5px;
 `;
 
-export const CartButtonText = styled.span`
-  display: flex;
-  min-width: min-content;
-  text-transform: uppercase;
-  font-size: 12px;
-  font-weight: bold;
-`;

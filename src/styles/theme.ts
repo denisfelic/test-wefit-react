@@ -7,6 +7,7 @@ export default {
     blue: "#009EDD",
     green: "#039B00",
   },
+  borderRadius: "4px",
   container: "960px",
   breakpoints: {
     md: 768,

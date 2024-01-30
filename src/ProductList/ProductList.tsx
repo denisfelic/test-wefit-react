@@ -1,9 +1,8 @@
-
 import { Product } from "../@types";
+import Button from "../components/Button";
 import useCart from "../contexts/CartContextProvider/useCart";
 import {
   CardBodyWrapper,
-  CardButtonWrapper,
   CardContainerWrapper,
   CardImage,
   CardInfoWrapper,
@@ -11,7 +10,6 @@ import {
   CardTitle,
   CardWrapper,
   CartButtonIconWrapper,
-  CartButtonText,
 } from "./styled";
 
 export default function ProductList({ products }: { products: Product[] }) {
@@ -32,7 +30,7 @@ export default function ProductList({ products }: { products: Product[] }) {
                   <CardTitle>{product.title}</CardTitle>
                   <CardPrice>R$ {product.price.toFixed(2)}</CardPrice>
                 </CardInfoWrapper>
-                <CardButtonWrapper
+                <Button
                   onClick={() => {
                     addProductToCart(product);
                   }}
@@ -40,12 +38,12 @@ export default function ProductList({ products }: { products: Product[] }) {
                 >
                   <CartButtonIconWrapper>
                     <img src="/svg/cart-icon.svg" />
-                    <CartButtonText style={{ fontWeight: 400 }}>
+                    <Button.Text style={{ fontWeight: 400 }}>
                       {cartProduct?.quantity ?? 0}
-                    </CartButtonText>
+                    </Button.Text>
                   </CartButtonIconWrapper>
-                  <CartButtonText>Adicionar ao carrinho</CartButtonText>
-                </CardButtonWrapper>
+                  <Button.Text>Adicionar ao carrinho</Button.Text>
+                </Button>
               </CardBodyWrapper>
             </CardWrapper>
           );
