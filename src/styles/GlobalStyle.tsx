@@ -49,6 +49,10 @@ const GlobalStyle = createGlobalStyle`
     font-family: "Open Sans", sans-serif;
     background-color: ${theme.colors.darkGray};
   }
+
+  button {
+    width: fit-content;
+  }
 `;
 
 export default GlobalStyle;

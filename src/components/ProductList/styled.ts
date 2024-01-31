@@ -18,7 +18,7 @@ export const CardContainerWrapper = styled.ul`
   gap: 16px;
   max-width: ${theme.container};
   margin: 0 auto;
-  width: 100%;
+  width: 100%;;
   @media screen and (${theme.breakpoints.lg}){ 
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;

@@ -1,18 +1,27 @@
+import { useState } from "react";
 import styled from "styled-components";
 import { ICartItemProps } from "../../contexts/CartContextProvider";
-import theme from "../../styles/theme";
 import { displayMoneyValueFormatted } from "../../helpers/displayMoneyValueFormatted";
-import { useState } from "react";
+import theme from "../../styles/theme";
 
-const CartItemWrapper = styled.div`
+const CartItemMobileWrapper = styled.div`
   display: flex;
   gap: 16px;
+
+  @media screen and (${theme.breakpoints.lg}) {
+    display: none;
+  }
 `;
 
 const CartItemImage = styled.img`
   width: 64px;
   height: 82px;
   object-fit: cover;
+
+  @media screen and (${theme.breakpoints.lg}) {
+    width: 89px;
+    height: 114px;
+  }
 `;
 
 const CartInfoTopTextsWrapper = styled.div`
@@ -22,6 +31,14 @@ const CartInfoTopTextsWrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   height: fit-content;
+
+  @media screen and (${theme.breakpoints.lg}) {
+    flex-direction: column;
+    align-items: baseline;
+    padding-left: 52px;
+    align-self: center;
+    gap: 13px;
+  }
 `;
 
 const CartTitle = styled.p`
@@ -32,6 +49,10 @@ const CartTitle = styled.p`
 
 const CartPrice = styled.p`
   font-weight: bold;
+
+  @media screen and (${theme.breakpoints.lg}) {
+    padding-left: 3px;
+  }
 `;
 
 const CartInfoTopWrapper = styled.div`
@@ -60,6 +81,12 @@ const CartActionsButtonWrapper = styled.button`
   display: flex;
   gap: 11px;
   align-items: center;
+
+  @media screen and (${theme.breakpoints.lg}) {
+    padding-left: 3.6px;
+    gap: 11.7px;
+    margin-top: -0.9px;
+  }
 `;
 
 const CartActionButton = styled.button`
@@ -82,7 +109,13 @@ const CartSubTotalWrapper = styled.div`
   flex-direction: column;
   align-self: flex-end;
   text-align: right;
-  gap: 2px;
+  gap: 2.6px;
+
+  @media screen and (${theme.breakpoints.lg}) {
+    height: 100%;
+    flex-direction: row;
+    align-items: center;
+  }
 `;
 
 const CartSubTotalText = styled.p`
@@ -90,6 +123,29 @@ const CartSubTotalText = styled.p`
   font-weight: bold;
   color: ${theme.colors.gray};
   text-transform: uppercase;
+`;
+
+// Desktop Version Only components
+
+const CartItemDesktopWrapper = styled.div`
+  display: none;
+  @media screen and (${theme.breakpoints.lg}) {
+    display: grid;
+    grid-template-columns: 444px 171px 1fr 1fr;
+    padding-left: 8px;
+    padding-top: 9px;
+    align-items: center;
+  }
+`;
+
+const CartRemoveItemButtonDesktopWrapper = styled.div`
+  display: none;
+  @media screen and (${theme.breakpoints.lg}) {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    padding-right: 9px;
+  }
 `;
 
 export interface ICartItem {
@@ -127,60 +183,122 @@ export default function CartItem({
   };
 
   return (
-    <CartItemWrapper>
-      <CartItemImage
-        src={cartItem.product.image}
-        alt={`Imagem do produto ${cartItem.product.title}`}
-      />
-      <CartInfoWrapper>
-        <CartInfoTopWrapper>
-          <CartInfoTopTextsWrapper>
-            <CartTitle>{cartItem.product.title}</CartTitle>
-            <CartPrice>
-              R$ {displayMoneyValueFormatted(cartItem.product.price)}
-            </CartPrice>
-          </CartInfoTopTextsWrapper>
-          <button onClick={onRemoveCartItem}>
-            <img src="/svg/bin-trash.svg" alt="imagem de lixeira" />
-          </button>
-        </CartInfoTopWrapper>
+    <>
+      {/* Mobile view */}
+      <CartItemMobileWrapper>
+        <CartItemImage
+          src={cartItem.product.image}
+          alt={`Imagem do produto ${cartItem.product.title}`}
+        />
+        <CartInfoWrapper>
+          <CartInfoTopWrapper>
+            <CartInfoTopTextsWrapper>
+              <CartTitle>{cartItem.product.title}</CartTitle>
+              <CartPrice>
+                R$ {displayMoneyValueFormatted(cartItem.product.price)}
+              </CartPrice>
+            </CartInfoTopTextsWrapper>
+            <button onClick={onRemoveCartItem}>
+              <img src="/svg/bin-trash.svg" alt="imagem de lixeira" />
+            </button>
+          </CartInfoTopWrapper>
 
-        <CartInfoBottomWrapper>
-          <CartActionsButtonWrapper>
-            <CartActionButton onClick={onDecrement}>
-              <img src="/svg/remove-icon.svg" alt="" />
-            </CartActionButton>
-            <CartQuantityInput
-              min={1}
-              value={parseInt(quantity.toString())}
-              type="number"
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  handleUpdateQuantity();
-                }
-              }}
-              onChange={(event) => {
-                const value = Number(event.target.value);
-                if (typeof value === "number" && value > -1) {
-                  setQuantity(value);
-                }
-              }}
+          <CartInfoBottomWrapper>
+            <CartQuantityManager
+              handleUpdateQuantity={handleUpdateQuantity}
+              onDecrement={onDecrement}
+              onIncrementCartItem={onIncrementCartItem}
+              quantity={quantity}
+              setQuantity={setQuantity}
             />
-            <CartActionButton
-              onClick={() => {
-                setQuantity((prev) => prev + 1);
-                onIncrementCartItem();
-              }}
-            >
-              <img src="/svg/add-icon.svg" alt="" />
-            </CartActionButton>
-          </CartActionsButtonWrapper>
+            <CartSubTotalWrapper>
+              <CartSubTotalText>Subtotal</CartSubTotalText>
+              <CartPrice>R$ {displayMoneyValueFormatted(subTotal)}</CartPrice>
+            </CartSubTotalWrapper>
+          </CartInfoBottomWrapper>
+        </CartInfoWrapper>
+      </CartItemMobileWrapper>
+
+      {/* Desktop view */}
+      <CartItemDesktopWrapper>
+        <>
+          <div style={{ display: "flex" }}>
+            <CartItemImage
+              src={cartItem.product.image}
+              alt={`Imagem do produto ${cartItem.product.title}`}
+            />
+
+            <CartInfoTopTextsWrapper>
+              <CartTitle>{cartItem.product.title}</CartTitle>
+              <CartPrice>
+                R$ {displayMoneyValueFormatted(cartItem.product.price)}
+              </CartPrice>
+            </CartInfoTopTextsWrapper>
+          </div>
+          <CartQuantityManager
+            handleUpdateQuantity={handleUpdateQuantity}
+            onDecrement={onDecrement}
+            onIncrementCartItem={onIncrementCartItem}
+            quantity={quantity}
+            setQuantity={setQuantity}
+          />
           <CartSubTotalWrapper>
-            <CartSubTotalText>Subtotal</CartSubTotalText>
             <CartPrice>R$ {displayMoneyValueFormatted(subTotal)}</CartPrice>
           </CartSubTotalWrapper>
-        </CartInfoBottomWrapper>
-      </CartInfoWrapper>
-    </CartItemWrapper>
+
+          <CartRemoveItemButtonDesktopWrapper>
+            <button onClick={onRemoveCartItem}>
+              <img src="/svg/bin-trash.svg" alt="imagem de lixeira" />
+            </button>
+          </CartRemoveItemButtonDesktopWrapper>
+        </>
+      </CartItemDesktopWrapper>
+    </>
   );
 }
+
+const CartQuantityManager = ({
+  quantity,
+  onDecrement,
+  handleUpdateQuantity,
+  setQuantity,
+  onIncrementCartItem,
+}: {
+  quantity: number;
+  onDecrement: () => void;
+  handleUpdateQuantity: () => void;
+  setQuantity: React.Dispatch<React.SetStateAction<number>>;
+  onIncrementCartItem: () => void;
+}) => {
+  return (
+    <CartActionsButtonWrapper>
+      <CartActionButton onClick={onDecrement}>
+        <img src="/svg/remove-icon.svg" alt="" />
+      </CartActionButton>
+      <CartQuantityInput
+        min={1}
+        value={parseInt(quantity.toString())}
+        type="number"
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            handleUpdateQuantity();
+          }
+        }}
+        onChange={(event) => {
+          const value = Number(event.target.value);
+          if (typeof value === "number" && value > -1) {
+            setQuantity(value);
+          }
+        }}
+      />
+      <CartActionButton
+        onClick={() => {
+          setQuantity((prev) => prev + 1);
+          onIncrementCartItem();
+        }}
+      >
+        <img src="/svg/add-icon.svg" alt="" />
+      </CartActionButton>
+    </CartActionsButtonWrapper>
+  );
+};
