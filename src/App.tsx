@@ -1,7 +1,7 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import CartContextProvider from "./contexts/CartContextProvider";
-import HomePage from "./pages/Home";
 import CartPage from "./pages/CartPage";
+import HomePage from "./pages/Home";
 
 export const routes = {
   home: "/",
