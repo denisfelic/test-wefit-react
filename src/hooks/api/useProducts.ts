@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import { Product } from "../../@types";
+import { IProduct } from "../../contexts/CartContextProvider/types";
+import { api } from "../../lib/axios";
 
 export default function useProducts() {
-  const [products, setProducts] = useState<Product[] | undefined>([]);
+  const [products, setProducts] = useState<IProduct[] | undefined>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   const loadProducts = async () => {
@@ -27,7 +28,6 @@ export default function useProducts() {
 }
 
 async function getProducts() {
-  const response = await fetch("http://localhost:3333/products");
-  const data = await response.json();
-  return data;
+  const response = await api.get("/products");
+  return response.data;
 }
