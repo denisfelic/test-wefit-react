@@ -11,6 +11,8 @@ const HeaderContainer = styled.div`
   padding: 18px 10px;
   justify-content: space-between;
   align-items: center;
+  max-width: ${theme.container};
+  margin: 0 auto;
 
   @media screen and (${theme.breakpoints.lg}) {
     padding-top: 20px;
@@ -28,7 +30,7 @@ const HeaderTitle = styled.p`
 const CartContainer = styled.div`
   display: flex;
   align-items: center;
-  gap: 13px;
+  gap: 12px;
 
   @media screen and (${theme.breakpoints.lg}) {
     gap: 10px;

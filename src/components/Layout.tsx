@@ -9,7 +9,6 @@ const LayoutWrapper = styled.div`
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  max-width: ${theme.container};
   margin: 0 auto;
 `;
 

@@ -34,12 +34,6 @@ export const CartButtonText = styled.span<CartButtonTextProps>`
   text-transform: uppercase;
   font-size: ${(props) => (props.size == "medium" ? "14px" : "12px")};
   font-weight: bold;
-  padding-top: ${(props) => (props.size === "medium" ? "2px" : "0px")};
-  padding-bottom: ${(props) => (props.size === "medium" ? "2px" : "0px")};
-  padding-left: 38px;
-
-  @media screen and (${theme.breakpoints.lg}) {
-  }
 `;
 
 export default function Button({ children, ...props }: IButtonProps) {

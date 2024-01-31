@@ -40,11 +40,11 @@ export default function ProductList({ products }: { products: Product[] }) {
               >
                 <CartButtonIconWrapper>
                   <img src="/svg/cart-icon.svg" />
-                  <Button.Text style={{ fontWeight: 400, paddingLeft: 0 }}>
+                  <Button.Text style={{ fontWeight: 400 }}>
                     {cartProduct?.quantity ?? 0}
                   </Button.Text>
                 </CartButtonIconWrapper>
-                <Button.Text>
+                <Button.Text style={{ paddingLeft: "38px" }}>
                   {cartProduct?.quantity && cartProduct?.quantity > 0
                     ? "Item adicionado"
                     : "Adicionar ao carrinho"}
