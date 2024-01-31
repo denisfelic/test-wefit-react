@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components";
-import { ICartItemProps } from "../../contexts/CartContextProvider";
+import { ICartItemProps } from "../../contexts/CartContextProvider/types";
 import { displayMoneyValueFormatted } from "../../helpers/displayMoneyValueFormatted";
 import theme from "../../styles/theme";
 

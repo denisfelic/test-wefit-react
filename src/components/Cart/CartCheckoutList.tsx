@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { ICartItemProps } from "../../contexts/CartContextProvider";
+import { ICartItemProps } from "../../contexts/CartContextProvider/types";
 import { displayMoneyValueFormatted } from "../../helpers/displayMoneyValueFormatted";
 import theme from "../../styles/theme";
 import Button, { DefaultButtonStyles } from "../Button";
@@ -55,8 +55,7 @@ const CartCheckoutBottomWrapper = styled.div`
   @media screen and (${theme.breakpoints.lg}) {
     flex-direction: row-reverse;
     justify-content: space-between;
-  padding: 20px 16px 25px 16px;
-
+    padding: 20px 16px 25px 16px;
   }
 `;
 
@@ -89,9 +88,9 @@ const CartCheckoutTotalTextValue = styled.p`
 
 const CartCheckoutButtonWrapper = styled.div`
   @media screen and (${theme.breakpoints.lg}) {
-    padding-left: 8px
+    padding-left: 8px;
   }
-`
+`;
 
 // Desktop Version Only components
 const CartItemsHeaderContainer = styled.div`
@@ -123,7 +122,7 @@ const CheckoutButton = styled.button`
   @media screen and (${theme.breakpoints.lg}) {
     padding: 13px 52.3px;
   }
-`
+`;
 
 export default function CartCheckoutList({
   cartItems,

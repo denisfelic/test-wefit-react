@@ -1,21 +1,6 @@
 import { createContext, useEffect, useMemo, useState } from "react";
-import { Product } from "../../@types";
+import { ICartContextProps, ICartItemProps, IProduct } from "./types";
 
-export interface ICartItemProps {
-  product: Product;
-  quantity: number;
-}
-
-interface ICartContextProps {
-  cartProducts: ICartItemProps[];
-  addProductToCart: (product: Product) => void;
-  removeProductFromCart: (product: Product) => void;
-  decrementProductQuantity: (product: Product) => void;
-  updateProductQuantity: (product: Product, quantity: number) => void;
-  clearCart: () => void;
-  totalOfItemsInCart: number;
-  isLoading: boolean;
-}
 export const CartContext = createContext({} as ICartContextProps);
 
 export default function CartContextProvider({
@@ -30,7 +15,7 @@ export default function CartContextProvider({
     [cartProducts]
   );
 
-  const addProductToCart = (product: Product) => {
+  const addProductToCart = (product: IProduct) => {
     const productInCart = cartProducts.find((p) => p.product.id === product.id);
 
     let updatedCart: ICartItemProps[] = [];
@@ -55,7 +40,7 @@ export default function CartContextProvider({
     saveCardInStorage(updatedCart);
   };
 
-  const removeProductFromCart = (product: Product) => {
+  const removeProductFromCart = (product: IProduct) => {
     let updatedCart = cartProducts.filter((p) => p.product.id !== product.id);
     setCartProducts(updatedCart);
     saveCardInStorage(updatedCart);
@@ -88,7 +73,7 @@ export default function CartContextProvider({
     }
   };
 
-  const decrementProductQuantity = (product: Product) => {
+  const decrementProductQuantity = (product: IProduct) => {
     const updatedCart = cartProducts.map((p) => {
       if (p.product.id === product.id) {
         return {
@@ -102,7 +87,7 @@ export default function CartContextProvider({
     saveCardInStorage(updatedCart);
   };
 
-  const updateProductQuantity = (product: Product, quantity: number) => {
+  const updateProductQuantity = (product: IProduct, quantity: number) => {
     const updatedCart = cartProducts.map((p) => {
       if (p.product.id === product.id) {
         return {

@@ -1,4 +1,4 @@
-import { Product } from "../../@types";
+import { IProduct } from "../../contexts/CartContextProvider/types";
 import useCart from "../../contexts/CartContextProvider/useCart";
 import { displayMoneyValueFormatted } from "../../helpers/displayMoneyValueFormatted";
 import Button from "../Button";
@@ -13,10 +13,10 @@ import {
   CartButtonIconWrapper,
 } from "./styled";
 
-export default function ProductList({ products }: { products: Product[] }) {
+export default function ProductList({ products }: { products: IProduct[] }) {
   const { addProductToCart, cartProducts } = useCart();
 
-  const productInCart = (product: Product) =>
+  const productInCart = (product: IProduct) =>
     cartProducts.find((p) => p.product.id === product.id);
   return (
     <CardContainerWrapper>
