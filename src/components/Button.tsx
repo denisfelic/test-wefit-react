@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import theme from "../styles/theme";
 
 interface IButtonProps extends CardButtonProps {}
@@ -8,7 +8,8 @@ export interface CardButtonProps
   color?: "green" | "blue";
   fitContent?: boolean;
 }
-export const CardButtonWrapper = styled.button<CardButtonProps>`
+
+export const DefaultButtonStyles = css`
   display: flex;
   color: ${theme.colors.white};
   align-items: center;
@@ -17,18 +18,30 @@ export const CardButtonWrapper = styled.button<CardButtonProps>`
   padding: 11px 10.53px;
   justify-content: center;
   border-radius: 4px;
-  background-color: ${(props) => {
-    return props.color === "green" ? theme.colors.green : theme.colors.blue;
-  }};
+
   position: relative;
   padding: 13px 10.53px;
   justify-content: center;
   text-align: center;
+  background-color: ${theme.colors.blue};
 
   @media screen and (${theme.breakpoints.lg}) {
-    min-width: ${(props) => (props.fitContent ?  "fit-content": "100%" )};
-    width: ${(props) => (props.fitContent ?  "fit-content": "100%" )};
+    min-width: fit-content;
+    width: fit-content;
     padding: 13px 20.3px;
+  }
+`;
+
+export const CardButtonWrapper = styled.button<CardButtonProps>`
+  ${DefaultButtonStyles}
+
+  background-color: ${(props) => {
+    return props.color === "green" ? theme.colors.green : theme.colors.blue;
+  }};
+
+  @media screen and (${theme.breakpoints.lg}) {
+    min-width: ${(props) => (props.fitContent ? "fit-content" : "100%")};
+    width: ${(props) => (props.fitContent ? "fit-content" : "100%")};
   }
 `;
 

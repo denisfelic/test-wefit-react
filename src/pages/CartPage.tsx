@@ -1,10 +1,30 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { routes } from "../App";
-import EmptyCart from "../components/EmptyCart";
+import GenericCardWithImage from "../components/GenericCardWithImage";
 import Layout from "../components/Layout";
 import useCart from "../contexts/CartContextProvider/useCart";
 import CartCheckout from "../features/CartCheckout";
+import styled from "styled-components";
+import theme from "../styles/theme";
+
+const MobileImage = styled.img`
+  display: block;
+  padding: 0 24px;
+  @media screen and (${theme.breakpoints.lg}) {
+    display: none;
+  }
+`;
+
+const DesktopImage = styled.img`
+  display: none;
+  @media screen and (${theme.breakpoints.lg}) {
+    display: block;
+    margin: 0 auto;
+    margin-top: 12px;
+    max-width: 470.6px;
+  }
+`;
 
 export default function CartPage() {
   const { isLoading: cartIsLoading } = useCart();
@@ -37,15 +57,17 @@ export default function CartPage() {
     <Layout isLoading={cartIsLoading || processingCheckout}>
       <Layout.ContentWrapper>
         {showSuccessCheckout ? (
-          <EmptyCart
-            title="Compra realizada com sucesso!"
-            image={{
-              src: "/svg/success-checkout.svg",
-              alt: "Success Checkout",
-              style: {
-                padding: "0 24px",
-              },
+          <GenericCardWithImage
+            title={{
+              mobile: "Compra realizada com sucesso!",
+              desktop: "Compra realizada com sucesso!",
             }}
+            image={
+              <>
+                <MobileImage src={"/svg/success-checkout.svg"} />
+                <DesktopImage src={"/svg/success-checkout.svg"} />
+              </>
+            }
             buttonProps={{
               onClick: () => {
                 navigate(routes.home);

@@ -1,22 +1,26 @@
-import { useNavigate } from "react-router-dom";
-import useCart from "../contexts/CartContextProvider/useCart";
 import { useMemo } from "react";
-import EmptyCart from "../components/EmptyCart";
-import CartCheckoutList from "../components/Cart/CartCheckoutList";
+import { useNavigate } from "react-router-dom";
 import { routes } from "../App";
+import CartCheckoutList from "../components/Cart/CartCheckoutList";
+import GenericCardWithImage from "../components/GenericCardWithImage";
+import useCart from "../contexts/CartContextProvider/useCart";
 import styled from "styled-components";
 import theme from "../styles/theme";
 
-const EmptyCardWrapper = styled.div`
-  max-width: ${theme.container};
-  margin: 0 auto;
-  width: 100%;
+const MobileImage = styled.img`
+  display: block;
+  @media screen and (${theme.breakpoints.lg}) {
+    display: none;
+  }
 `;
 
-const EmptyCardSubWrapper = styled.div`
+const DesktopImage = styled.img`
+  display: none;
   @media screen and (${theme.breakpoints.lg}) {
-    margin-left: -11px;
-    padding-right: 11px;
+    display: block;
+    margin: 0 auto;
+    margin-top: 12px;
+    max-width: 470.6px;
   }
 `;
 
@@ -47,27 +51,27 @@ export default function CartCheckout({
   return (
     <>
       {cartProducts.length === 0 ? (
-        <EmptyCardWrapper>
-          <EmptyCardSubWrapper>
-            <EmptyCart
-              title={{
-                mobile: <>Parece que não <br/>há nada por aqui :(</>,
-                desktop: <>Parece que não há nada por aqui :(</>
-              }}
-              image={{
-                src: {
-                  mobile: "/svg/empty-cart.svg",
-                  desktop: "/svg/empty-cart-desktop.svg",
-                },
-                alt: "Empty Cart",
-              }}
-              buttonProps={{
-                onClick: () => navigate(routes.home),
-                children: "Voltar",
-              }}
-            />
-          </EmptyCardSubWrapper>
-        </EmptyCardWrapper>
+        <GenericCardWithImage
+          title={{
+            mobile: (
+              <>
+                Parece que não <br />
+                há nada por aqui :(
+              </>
+            ),
+            desktop: <>Parece que não há nada por aqui :(</>,
+          }}
+          image={
+            <>
+              <MobileImage src={"/svg/empty-cart.svg"} />
+              <DesktopImage src={"/svg/empty-cart-desktop.svg"} />
+            </>
+          }
+          buttonProps={{
+            onClick: () => navigate(routes.home),
+            children: "Voltar",
+          }}
+        />
       ) : (
         <>
           <CartCheckoutList

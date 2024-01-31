@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { ICartItemProps } from "../../contexts/CartContextProvider";
 import { displayMoneyValueFormatted } from "../../helpers/displayMoneyValueFormatted";
 import theme from "../../styles/theme";
-import Button from "../Button";
+import Button, { DefaultButtonStyles } from "../Button";
 import CartItem from "./CartItem";
 
 const CartCheckoutContainerWrapper = styled.div`
@@ -117,6 +117,14 @@ const Hr = styled.hr`
   margin: 0 24px;
 `;
 
+const CheckoutButton = styled.button`
+  ${DefaultButtonStyles}
+
+  @media screen and (${theme.breakpoints.lg}) {
+    padding: 13px 52.3px;
+  }
+`
+
 export default function CartCheckoutList({
   cartItems,
   totalCartValue,
@@ -170,11 +178,11 @@ export default function CartCheckoutList({
             </CartCheckoutTotalTextValue>
           </CartCheckoutTotalTextWrapper>
           <CartCheckoutButtonWrapper>
-            <Button>
+            <CheckoutButton>
               <Button.Text size="medium" onClick={onProceedCheckout}>
                 Finalizar pedido
               </Button.Text>
-            </Button>
+            </CheckoutButton>
           </CartCheckoutButtonWrapper>
         </CartCheckoutBottomWrapper>
       </CartCheckoutSubContainerWrapper>

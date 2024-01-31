@@ -44,7 +44,14 @@ export default function ProductList({ products }: { products: Product[] }) {
                     {cartProduct?.quantity ?? 0}
                   </Button.Text>
                 </CartButtonIconWrapper>
-                <Button.Text style={{ paddingLeft: "38px" }}>
+                <Button.Text
+                  style={{
+                    paddingLeft:
+                      Number(cartProduct?.quantity ?? 0) > 9999
+                        ? "88px"
+                        : "38px",
+                  }}
+                >
                   {cartProduct?.quantity && cartProduct?.quantity > 0
                     ? "Item adicionado"
                     : "Adicionar ao carrinho"}

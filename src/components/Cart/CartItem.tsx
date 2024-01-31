@@ -49,10 +49,6 @@ const CartTitle = styled.p`
 
 const CartPrice = styled.p`
   font-weight: bold;
-
-  @media screen and (${theme.breakpoints.lg}) {
-    padding-left: 3px;
-  }
 `;
 
 const CartInfoTopWrapper = styled.div`
@@ -115,6 +111,7 @@ const CartSubTotalWrapper = styled.div`
     height: 100%;
     flex-direction: row;
     align-items: center;
+    padding-left: 3px;
   }
 `;
 
@@ -270,6 +267,7 @@ const CartQuantityManager = ({
   setQuantity: React.Dispatch<React.SetStateAction<number>>;
   onIncrementCartItem: () => void;
 }) => {
+  const MAX_VALUE = 99999999;
   return (
     <CartActionsButtonWrapper>
       <CartActionButton onClick={onDecrement}>
@@ -277,6 +275,7 @@ const CartQuantityManager = ({
       </CartActionButton>
       <CartQuantityInput
         min={1}
+        max={MAX_VALUE}
         value={parseInt(quantity.toString())}
         type="number"
         onKeyDown={(e) => {
@@ -286,7 +285,7 @@ const CartQuantityManager = ({
         }}
         onChange={(event) => {
           const value = Number(event.target.value);
-          if (typeof value === "number" && value > -1) {
+          if (typeof value === "number" && value > -1 && value < MAX_VALUE) {
             setQuantity(value);
           }
         }}

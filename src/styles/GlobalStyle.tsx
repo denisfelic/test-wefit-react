@@ -52,6 +52,11 @@ const GlobalStyle = createGlobalStyle`
 
   button {
     width: fit-content;
+    cursor: pointer;
+  }
+
+  a{
+    text-decoration: none;
   }
 `;
 
