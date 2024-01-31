@@ -1,11 +1,11 @@
 import { useMemo } from "react";
 import { useNavigate } from "react-router-dom";
-import { routes } from "../App";
-import CartCheckoutList from "../components/Cart/CartCheckoutList";
-import GenericCardWithImage from "../components/GenericCardWithImage";
-import useCart from "../contexts/CartContextProvider/useCart";
 import styled from "styled-components";
-import theme from "../styles/theme";
+import { routes } from "../../App";
+import useCart from "../../contexts/CartContextProvider/useCart";
+import theme from "../../styles/theme";
+import GenericCardWithImage from "../GenericCardWithImage";
+import CartCheckoutList from "./CartCheckoutList";
 
 const MobileImage = styled.img`
   display: block;

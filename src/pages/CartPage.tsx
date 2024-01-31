@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
 import { routes } from "../App";
+import CartCheckout from "../components/Cart/CartCheckout";
 import GenericCardWithImage from "../components/GenericCardWithImage";
 import Layout from "../components/Layout";
 import useCart from "../contexts/CartContextProvider/useCart";
-import CartCheckout from "../features/CartCheckout";
-import styled from "styled-components";
 import theme from "../styles/theme";
 
 const MobileImage = styled.img`

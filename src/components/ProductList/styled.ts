@@ -9,7 +9,6 @@ export const CardWrapper = styled.li`
   justify-content: center;
   align-items: center;
   padding: 10px 10px;
-
 `;
 
 export const CardContainerWrapper = styled.ul`
@@ -18,8 +17,8 @@ export const CardContainerWrapper = styled.ul`
   gap: 16px;
   max-width: ${theme.container};
   margin: 0 auto;
-  width: 100%;;
-  @media screen and (${theme.breakpoints.lg}){ 
+  width: 100%;
+  @media screen and (${theme.breakpoints.lg}) {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
   }
@@ -44,8 +43,8 @@ export const CardInfoWrapper = styled.div`
   margin-bottom: 11.2px;
 
   @media screen and (${theme.breakpoints.lg}) {
-     gap: 7.6px;
-     margin-bottom: 11.8px;
+    gap: 7.6px;
+    margin-bottom: 11.8px;
   }
 `;
 

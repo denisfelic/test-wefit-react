@@ -1,7 +1,7 @@
 import styled from "styled-components";
+import theme from "../styles/theme";
 import Header from "./Header";
 import LoadingSpinner from "./LoadingSpinner";
-import theme from "../styles/theme";
 
 const LayoutWrapper = styled.div`
   width: 100vw;
@@ -33,8 +33,7 @@ const ContentWrapper = styled.div`
   display: flex;
   flex-direction: column;
 
-
-  @media screen and (${theme.breakpoints.lg}){ 
+  @media screen and (${theme.breakpoints.lg}) {
     padding: 29px 0px;
   }
 `;
